@@ -200,7 +200,7 @@ def render_header():
         st.markdown("""
             ## Apple MLX Powered Video Transcription
 
-            Upload your video and get:
+            Upload your video/audio and get:
             - Accurate transcripts (SRT/VTT files)
             - Lightning-fast processing
 
@@ -268,12 +268,12 @@ def process_video(input_file, model_name, language):
     
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
-        logging.exception("Error in processing video")
+        logging.exception("Error in processing media")
 
 def main():
     st.set_page_config(page_title="Auto Subtitled Video Generator", page_icon=":movie_camera:", layout="wide")
     render_header()
-    input_file = st.file_uploader("Upload Video File", type=["mp4", "avi", "mov", "mkv"])
+    input_file = st.file_uploader("Upload Media File", type=["mp4", "avi", "mov", "mkv", "wav", "mp3", "opus", "m4a", "ogg"])
     model_name, is_language_locked = render_model_selection()
    
     if is_language_locked:
@@ -284,7 +284,7 @@ def main():
     language = LANGUAGES[selected_language]
 
     if input_file and st.button("Transcribe"):
-        with st.spinner(f"Transcribing the video using {model_name} model..."):
+        with st.spinner(f"Transcribing the media using {model_name} model..."):
             process_video(input_file, model_name, language)
 
 if __name__ == "__main__":
